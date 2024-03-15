@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="sidebar">
+            <h4 class="sidebar-heading mb-4">Notes List</h4>
+            <div class="list-group">
+                {% for note in notes %}
+                <a href="{% url 'notes.detail' pk=note.id %}" class="list-group-item list-group-item-action">
+                    {{ note.title|truncatechars:25 }}
+                </a>
+                {% endfor %}
+                <hr class="my-3">
+                <a href="{% url 'notes.new' %}" class="btn btn-light mb-1">Create a Note</a>
+                <a href="{% url 'logout' %}" class="btn btn-light mb-1">Log out</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        {% if note %}
+        <h4 class="heading mb-4">Note Details</h4>
+        <div class="card">
+            <div class="card-body">
+                <h1 class="fs-5">{{ note.title }}</h1>
+                <p>{{ note.text }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'notes.update' pk=note.id %}" class="btn btn-warning">Edit Note</a>
+                <a href="{% url 'notes.delete' pk=note.id %}" class="btn btn-danger">Delete Note</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="jumbotron">
+            <h1 class="display-5">Welcome to Smart Notes</h1>
+            <p class="lead">Start by creating your first note or explore existing ones.</p>
+            <a class="btn btn-primary" href="{% url 'notes.new' %}" role="button">Create a Note</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
